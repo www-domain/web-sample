@@ -2,7 +2,7 @@
   "name": "web-sample",
   "version": "1.0.0",
   "description": "A sample web page",
-  "main": "src/index.js",
+  "main": "build/index.js",
   "scripts": {
     "start": "node src/index.js",
     "test": "echo \"No test specified\" && exit 0",
@@ -22,8 +22,6 @@
     "express": "^4.21.2"
   },
   "devDependencies": {
-    "parcel": "^2.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/preset-env": "^7.0.0" 
+    "parcel": "^2.0.0"
   }
 }
