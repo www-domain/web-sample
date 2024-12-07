@@ -30,14 +30,19 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Upload build artifacts
+      - name: Prepare Deployment artifact
+        run: |
+          mkdir deploy
+          cp -r build/* deploy/
+          cp package.json package-lock.json start-server.sh deploy/
+          tar -czvf deploy.tar.gz deploy/
+
+      - name: Upload deployment artifact
         uses: actions/upload-artifact@v3
         with:
-          name: build-artifacts
-          path: |
-            build/
-            package.json
-            package-lock.json
+          name: deploy-artifact
+          path: deploy.tar.gz
+            
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,20 +52,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download build artifacts
+      - name: Download deployment artifact
         uses: actions/download-artifact@v3
         with:
-          name: build-artifacts
+          name: deploy-artifact
 
       - name: SSH into EC2
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
-      - name: Deploy to server
+      - name: Copy to server
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           SERVER: ${{ secrets.SERVER }}
           USERNAME: ${{ secrets.USERNAME }}
         run: |
-          ssh -i $SSH_PRIVATE_KEY $USERNAME@$SERVER 'cd /Pipeline/web-sample && git pull origin main && ./start-server.sh'
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null 
+          scp deploy.tar.gz $USERNAME@$SERVER:~/deploy.tar.gz 
+          ssh -o StrictHostKeyChecking=no $USERNAME@$SERVER "tar -xzvf deploy.tar.gz -C ~/ && cd ~/deploy && npm install && nohup node index.js > output.log 2>&1 &"
