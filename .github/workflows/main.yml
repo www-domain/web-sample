@@ -69,3 +69,4 @@ jobs:
           scp package.json package-lock.json $USERNAME@$SERVER:~/deploy
           ssh $USERNAME@$SERVER "cd ~/deploy && npm install"
           ssh $USERNAME@$SERVER "nohup node index.js > output.log 2>&1 &"
+  
