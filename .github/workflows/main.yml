@@ -33,8 +33,8 @@ jobs:
       - name: Prepare Deployment artifact
         run: |
           mkdir deploy
-          cp -r build/* deploy/
-          cp src/ public/ package.json package-lock.json start-server.sh deploy/
+          cp -r build/* src/ public/ deploy/
+          cp package.json package-lock.json start-server.sh deploy/
           tar -czvf deploy.tar.gz deploy/
 
       - name: Upload deployment artifact
