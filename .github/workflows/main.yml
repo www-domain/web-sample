@@ -77,6 +77,7 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           SERVER: ${{ secrets.SERVER }}
+          USERNAME: ${{ secrets.USERNAME }}
         run: |
           echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null 
           scp -o StrictHostKeyChecking=no deploy.tar.gz $USERNAME@$SERVER:~/deploy.tar.gz 
