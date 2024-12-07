@@ -20,5 +20,9 @@
   "homepage": "https://github.com/www-domain/web-sample#readme",
   "dependencies": {
     "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "webpack": "^5.97.1",
+    "webpack-cli": "^5.1.4"
   }
 }
