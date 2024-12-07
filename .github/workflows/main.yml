@@ -68,4 +68,4 @@ jobs:
           scp -r ./build/* $USERNAME@$SERVER:~/deploy
           scp package.json package-lock.json $USERNAME@$SERVER:~/deploy
           ssh $USERNAME@$SERVER "cd ~/deploy && npm install"
-          ssh $USERNAME@$SERVER "cd ~/deploy && node index.js"
+          ssh $USERNAME@$SERVER "nohup node index.js > output.log 2>&1 &"
