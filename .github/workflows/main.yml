@@ -63,10 +63,4 @@ jobs:
           SERVER: ${{ secrets.SERVER }}
           USERNAME: ${{ secrets.USERNAME }}
         run: |
-          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-          ssh -o StrictHostKeyChecking=no $USERNAME@$SERVER "rm -rf ~/deploy/* && mkdir -p ~/deploy"
-          scp -r ./build/* $USERNAME@$SERVER:~/deploy
-          scp package.json package-lock.json $USERNAME@$SERVER:~/deploy
-          ssh $USERNAME@$SERVER "cd ~/deploy && npm install"
-          ssh $USERNAME@$SERVER "nohup node index.js > output.log 2>&1 &"
-  
+          ssh -i $SSH_PRIVATE_KEY $USERNAME@$SERVER 'cd /Pipeline/web-sample && git pull origin main && ./start-server.sh'
