@@ -22,8 +22,8 @@
     "express": "^4.21.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0",
-    "parcel": "^2.13.2"
+    "parcel": "^2.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0" 
   }
 }
