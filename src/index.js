@@ -1,4 +1,4 @@
-http://ec2-34-204-45-84.compute-1.amazonaws.com:3000/const express = require('express');
+const express = require('express');
 const path = require('path');
 const app = express();
 const port = 3000;
